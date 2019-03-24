@@ -10,7 +10,7 @@ import { MAP, error } from './helper';
 
 // load all markers
 export const loadMarkers = (dispatch) => {
-  fetch(`${BASE_URL}/marker/all`, {
+  return fetch(`${BASE_URL}/marker/all`, {
     method: 'get'
   })
     .then(res => res.json())
@@ -21,6 +21,7 @@ export const loadMarkers = (dispatch) => {
           markers: markers
             .map(m => MAP.createMarker({
               id: m._id,
+              address: m.address,
               position: {
                 lat: m.lat,
                 lng: m.lng
@@ -32,20 +33,39 @@ export const loadMarkers = (dispatch) => {
     .catch(error);
 };
 
+// function tp get address from lat/lng
+const getAddress = (lat, lng) => {
+  return new Promise((res, rej) => {
+    // eslint-disable-next-line new-parens
+    var geocoder = new window.google.maps.Geocoder;
+    geocoder.geocode({location: { lat, lng }}, (results, status) => {
+      if (status === 'OK' && results[0]) {
+        res(results[0]);
+      } else {
+        rej('Please provied valid cordinates');
+      }
+    });
+  });
+};
+
 // create new marker
-export const addMarker = (dispatch, payload) => {
-  fetch(`${BASE_URL}/marker/new`, {
-    method: 'post',
-    body: JSON.stringify(payload),
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
+export const addMarker = (dispatch, payload, cb) => {
+  return getAddress(payload.lat, payload.lng)
+    .then(data => (
+      fetch(`${BASE_URL}/marker/new`, {
+        method: 'post',
+        body: JSON.stringify({ ...payload, address: data.formatted_address }),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    ))
     .then(res => res.json())
     .then(data => {
       const payload = MAP.createMarker({
         id: data._id,
+        address: data.address,
         position: {
           lat: data.lat,
           lng: data.lng
@@ -57,13 +77,15 @@ export const addMarker = (dispatch, payload) => {
         type: ADD_MARKERS,
         payload
       });
+
+      cb();
     })
     .catch(error);
 };
 
 // update exsiting marker
-export const updateMarker = (dispatch, payload) => {
-  fetch(`${BASE_URL}/marker/${payload.isEdit}`, {
+export const updateMarker = (dispatch, payload, cb) => {
+  return fetch(`${BASE_URL}/marker/${payload.isEdit}`, {
     method: 'put',
     body: JSON.stringify({ lat: payload.lat, lng: payload.lng }),
     headers: {
@@ -86,13 +108,15 @@ export const updateMarker = (dispatch, payload) => {
         type: UPDATE_MARKERS,
         payload
       });
+
+      cb();
     })
     .catch(error);
 };
 
 // delete marker
 export const deleteMarker = (dispatch, id) => {
-  fetch(`${BASE_URL}/marker/${id}`, {
+  return fetch(`${BASE_URL}/marker/${id}`, {
     method: 'delete'
   })
     .then(res => res.json())

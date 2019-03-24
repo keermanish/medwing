@@ -60,18 +60,15 @@ const Home = () => {
       addMarker(dispatch, {
         lat,
         lng
-      });
+      }, _closeModal); // close modal as cb
     } else {
       // update exisiting marker
       updateMarker(dispatch, {
         lat,
         lng,
         isEdit // contains id of marker
-      });
+      }, _closeModal); // close modal as cb
     }
-
-    // close modal
-    _closeModal();
   };
 
   const _onFieldChange = (e, setter) => setter(parseFloat(e.target.value));

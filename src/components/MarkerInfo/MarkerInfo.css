@@ -14,3 +14,12 @@
 .marker-info strong {
   font-weight: bold;
 }
+
+.marker-info h4 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 5px 0 10px;
+  color: #0059ff;
+  font-weight: bold;
+}

@@ -19,6 +19,7 @@ const MarkerInfo = ({ marker, showModal }) => {
 
   return (
     <li className="marker-info">
+      <h4 title={marker.address}>{marker.address || ''}</h4>
       <span><strong>Lat</strong>: {marker.position.lat}</span>
       <span><strong>Lng</strong>: {marker.position.lng}</span>
       <Button onClick={_onEdit}>Edit</Button>

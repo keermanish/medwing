@@ -24,6 +24,6 @@ export const MAP = {
 
 // common error handler
 export const error = (e) => {
-  console.error(e);
+  alert(e);
   throw e;
 }

@@ -14,6 +14,7 @@ import './Home.css';
 const Home = () => {
   const {state, dispatch} = useContext(StateContext);
   const [showModal, toggleModal] = useState(false);
+  const [loadingMap, updateMapLoading] = useState(true);
   const [lat, updateLat] = useState('');
   const [lng, updateLng] = useState('');
   const [isEdit, manageIsEdit] = useState(-1);
@@ -36,6 +37,9 @@ const Home = () => {
     updateErrors({});
     toggleModal(false);
   };
+
+  // wait till google map gets load, to avoid unawanted breaks
+  window.addEventListener('load', () => updateMapLoading(false));
 
   // function to post/pust marker details
   const _onSubmit = (e) => {
@@ -71,6 +75,10 @@ const Home = () => {
   };
 
   const _onFieldChange = (e, setter) => setter(parseFloat(e.target.value));
+
+  if (loadingMap) {
+    return <div className="text-center">Initializing Map</div>;
+  }
 
   return (
     <div className="container">

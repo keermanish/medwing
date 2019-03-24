@@ -26,3 +26,8 @@
   flex-wrap: wrap;
   align-items: flex-start;
 }
+
+.text-center {
+  padding: 10px;
+  text-align: center;
+}

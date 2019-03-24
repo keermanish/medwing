@@ -1,0 +1,23 @@
+.form-input {
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.form-input label,
+.form-input span,
+.form-input input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-input input {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #777;
+}
+
+.error {
+  color: #f00;
+}

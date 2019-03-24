@@ -1,0 +1,22 @@
+button {
+  padding: 10px;
+  margin: 5px;
+  color: #222;
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #222;
+  border-radius: 5px;
+}
+
+button.primary {
+  color: #fff;
+  border-color: #0059ff;
+  background-color: #0059ff;
+}
+
+button[disabled],
+button.primary[disabled] {
+  color: #fff;
+  border-color: #666;
+  background-color: #666;
+}

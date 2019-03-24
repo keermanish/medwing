@@ -1,0 +1,16 @@
+.marker-info {
+  padding: 10px;
+  border: 1px solid #777;
+  border-radius: 5px;
+  margin: 10px;
+  width: 40%;
+}
+
+.marker-info span {
+  margin: 5px;
+  display: block;
+}
+
+.marker-info strong {
+  font-weight: bold;
+}

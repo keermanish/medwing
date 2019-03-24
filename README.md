@@ -17,4 +17,8 @@
 - seperate `common.css`, which includes reset code and common styles
 - `index.js` to bootstrap the application
 
+## Test Cases ##
+- `npm run test`
+- Every component has their own test case file. e.g. `Home.test.js`
+
 **Note** - I've used `create-react-app` as started kit

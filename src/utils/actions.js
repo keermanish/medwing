@@ -85,18 +85,26 @@ export const addMarker = (dispatch, payload, cb) => {
 
 // update exsiting marker
 export const updateMarker = (dispatch, payload, cb) => {
-  return fetch(`${BASE_URL}/marker/${payload.isEdit}`, {
-    method: 'put',
-    body: JSON.stringify({ lat: payload.lat, lng: payload.lng }),
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
+  return getAddress(payload.lat, payload.lng)
+    .then(data => (
+      fetch(`${BASE_URL}/marker/${payload.isEdit}`, {
+        method: 'put',
+        body: JSON.stringify({
+          lat: payload.lat,
+          lng: payload.lng,
+          address: data.formatted_address
+        }),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    ))
     .then(res => res.json())
     .then(data => {
       const payload = MAP.createMarker({
         id: data._id,
+        address: data.address,
         position: {
           lat: data.lat,
           lng: data.lng

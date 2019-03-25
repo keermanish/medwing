@@ -6,7 +6,7 @@ export const DEFAULT_MAP_OPTIONS = {
 };
 
 // API base url
-export const BASE_URL = 'http://localhost:4000';
+export const BASE_URL = 'https://medwing.herokuapp.com';
 
 // action const
 export const LOAD_MARKERS = 'LOAD_MARKERS';
